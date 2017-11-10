@@ -1,8 +1,14 @@
 # egret-utils
 基于白鹭引擎 egret v5.0.9 的工具类库
 
-<img src="https://img.shields.io/badge/version-1.0.0-green.svg" alt="version">
-<img src="https://img.shields.io/badge/downloads-7k-blue.svg" alt="downloads">
+<p>
+  <span>
+    <img src="https://img.shields.io/badge/version-1.0.0-green.svg" alt="version">
+  </span>
+  <span>
+    <img src="https://img.shields.io/badge/downloads-7k-blue.svg" alt="downloads">
+  </span>
+</p>
 
 
 

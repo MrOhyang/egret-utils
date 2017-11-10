@@ -1,6 +1,11 @@
 # egret-utils
 基于白鹭引擎 egret v5.0.9 的工具类库
 
+<img src="https://img.shields.io/badge/version-1.0.0-green.svg" alt="version">
+<img src="https://img.shields.io/badge/downloads-7k-blue.svg" alt="downloads">
+
+
+
 
 
 ## 1. ObjectPool.ts 对象池管理类
@@ -16,6 +21,8 @@ let obj = ObjectPool.getInstance().deleteObject(obj: Object);
 
 > 注意事项：在使用该类的方法的时候，需要要求 classFactory 类中拥有静态成员属性 key 值来进行区分创建和回收存储不同种类的对象。
 > 如果需要查看详细的设计细节或具体的使用方法，[**请戳此处链接**](http://a8ccce0e.wiz03.com/share/s/2EPcUe16jknd21LCSr0jir5o1Uo2SA2TUQKH2PyOcZ0XXImI)。
+
+
 
 
 

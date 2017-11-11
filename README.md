@@ -3,7 +3,7 @@
 
 <p>
   <span>
-    <img src="https://img.shields.io/badge/version-1.0.0-green.svg" alt="version">
+    <img src="https://img.shields.io/badge/version-1.0.1-green.svg" alt="version">
   </span>
   <span>
     <img src="https://img.shields.io/badge/downloads-7k-blue.svg" alt="downloads">
@@ -46,6 +46,19 @@ new Http().post('/api/test', postData).then(r => {
 ```
 
 > 注意事项：必须使用 new 来创建一个请求。默认超时时间为30s，可直接修改默认值，或者新建方法参数来修改默认值。
+
+
+
+
+
+## 3. MCFactory.ts 用来管理生成 MovieClip 的类
+使用方法：
+
+```javascript
+let mc = MCFactory.createMovieClip(key);
+```
+
+> 注意事项：在资源中必须有对应的 json 数据和 png 图片。详细的细节可以结合源码查看。
 
 
 

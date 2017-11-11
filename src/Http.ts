@@ -47,7 +47,7 @@ class Http {
                 window.clearTimeout(timer);
                 reject(e);
             }, this);
-            window.setTimeout(() => {
+            timer = window.setTimeout(() => {
                 reject({
                     msg: `该链接已超时: ${timeout}`,
                     url,

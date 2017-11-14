@@ -22,6 +22,10 @@ class ObjectPool {
     //         recycle_count: number   // 回收备用总数
     //     }
     // };
+    /**
+     * 是否忽略警告
+     */
+    private not_warning: boolean = true;
 
     // 构造函数
     public constructor() {
@@ -69,14 +73,16 @@ class ObjectPool {
         if (this.pool[key].length <= 0) {
             obj = new classFactory();
             obj.key = key;
+            this.onCreate(obj);
             this.obj_count[key].created_count++;
             this.obj_count[key].show_count++;
-            return obj;
         } else {
+            obj = this.pool[key].shift();
+            this.onCreate(obj);
             this.obj_count[key].show_count++;
             this.obj_count[key].recycle_count--;
-            return this.pool[key].shift();
         }
+        return obj;
     }
 
     /**
@@ -92,9 +98,34 @@ class ObjectPool {
         this.checkPoolKey(key);
         // 从场景中移除
         if (obj.parent) obj.parent.removeChild(obj);
+        this.onDestory(obj);
         this.obj_count[key].show_count--;
         this.obj_count[key].recycle_count++;
         this.pool[key].push(obj);
+    }
+
+    /**
+     * 执行创建的对象的回调函数
+     * @param obj 指定的执行对象
+     */
+    private onCreate(obj: any) {
+        if (obj.onCreate) {
+            obj.onCreate();
+        } else if (!this.not_warning) {
+            console.log(`警告：该类没有创建之后的回调函数 onCreate`);
+        }
+    }
+
+    /**
+     * 执行回收的对象的回调函数
+     * @param obj 指定的执行对象
+     */
+    private onDestory(obj: any) {
+        if (obj.onDestory) {
+            obj.onDestory();
+        } else if (!this.not_warning) {
+            console.log(`警告：该类没有回收之后的回调函数 onDestory`);
+        }
     }
 
     /**

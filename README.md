@@ -3,7 +3,7 @@
 
 <p>
   <span>
-    <img src="https://img.shields.io/badge/version-1.0.2-green.svg" alt="version">
+    <img src="https://img.shields.io/badge/version-1.0.3-green.svg" alt="version">
   </span>
   <span>
     <img src="https://img.shields.io/badge/downloads-7k-blue.svg" alt="downloads">
@@ -60,6 +60,22 @@ let mc = MCFactory.createMovieClip(key);
 ```
 
 > 注意事项：在资源中必须有对应的 json 数据和 png 图片。详细的细节可以结合源码查看。
+
+
+
+
+
+## 4. ResManager.ts 用来管理资源加载的类（开发中）
+使用方法：
+
+```javascript
+try {
+    await new ResManager().loadGroup('group_1');
+} catch(e) {}
+// todo..
+```
+
+> 还在思考 loadingUI 那边需要如何处理，可能之后改单例模式。
 
 
 

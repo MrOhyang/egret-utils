@@ -3,7 +3,7 @@
 
 <p>
   <span>
-    <img src="https://img.shields.io/badge/version-1.0.3-green.svg" alt="version">
+    <img src="https://img.shields.io/badge/version-1.0.4-green.svg" alt="version">
   </span>
   <span>
     <img src="https://img.shields.io/badge/downloads-7k-blue.svg" alt="downloads">
@@ -65,17 +65,24 @@ let mc = MCFactory.createMovieClip(key);
 
 
 
-## 4. ResManager.ts 用来管理资源加载的类（开发中）
+## 4. ResManager.ts 用来管理资源加载的类
 使用方法：
 
-```javascript
+```typescript
+// loadingView 的类定义
+class loadingUI {
+  public setProgress() {}
+}
+ResManager.getInstance().init(loadingUI, this);  // 初始化资源管理器
 try {
-    await new ResManager().loadGroup('group_1');
-} catch(e) {}
-// todo..
+    await ResManager.getInstance().loadGroup('group_name');  // 加载资源
+} catch (e) {}
 ```
 
-> 还在思考 loadingUI 那边需要如何处理，可能之后改单例模式。
+> 注意事项：
+> 1. 在使用 ResManager 之前一定要先初始化。
+> 2. 在进行 loadGroup 的时候一定要用 try catch，或者使用 .then().catch() 语法。
+> 3. loadingUI 加载层类的定义中，一定要有 setProgress 方法，用来进行进度条的显示。
 
 
 

@@ -17,7 +17,7 @@
 ## 1. ObjectPool.ts 对象池管理类
 使用方法：
 
-```javascript
+```typescript
 // 创建一个对象实例
 let obj = ObjectPool.getInstance().createObject(classFactory: any);
 
@@ -36,7 +36,7 @@ let obj = ObjectPool.getInstance().deleteObject(obj: Object);
 ## 2. Http.ts 网络请求封装
 使用方法：
 
-```javascript
+```typescript
 // 1. async/await
 let res = await new Http().post('/api/test', postData);
 
@@ -55,7 +55,7 @@ new Http().post('/api/test', postData).then(r => {
 ## 3. MCFactory.ts 用来管理生成 MovieClip 的类
 使用方法：
 
-```javascript
+```typescript
 let mc = MCFactory.createMovieClip(key);
 ```
 
@@ -78,6 +78,12 @@ try {
     await ResManager.getInstance().loadGroup('group_name');  // 加载资源
 } catch (e) {}
 ```
+
+在 init 函数中，有两个参数，
+
+第1个参数是 loadingView （加载层）的类原型。当然，名字不一定是 loadingUI，可以随便定义。
+
+第2个参数是在加载资源过程中，需要将 loadingView 添加到视图中的父容器对象。
 
 > 注意事项：
 > 1. 在使用 ResManager 之前一定要先初始化。

@@ -61,6 +61,8 @@ class ResManager {
      * @param group_name 资源组的 key 名
      */
     public loadGroup(group_name: string) {
+        // 检测是否已经加载了资源
+        if (RES.isGroupLoaded(group_name)) return ;
         // 检测是否进行了初始化
         if (!this.container || !this.loadingViewFactory) {
             console.warn('请先进行初始化在调用 loadGroup');

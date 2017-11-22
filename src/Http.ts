@@ -12,6 +12,11 @@ class Http {
     private request: egret.HttpRequest;
 
     /**
+     * 域名
+     */
+    private static domain: any = null;
+
+    /**
      * 设置的 Http 请求超时时间, 默认30s
      */
     public static timeout: number = 30000;
@@ -100,10 +105,24 @@ class Http {
      * @param url 一个用来包含发送请求的 url 字符串
      */
     private getUrl(url: string): string {
-        if (window && window.location && /^((127.0.0.1)|(yes.com))/.test(window.location.host)) {
-            return `http://127.0.0.1:9001${url}`;
+        if (typeof Http.domain === 'string' && Http.domain.length > 0) {
+            return `http:\/\/${Http.domain}`;
+        } else if (typeof Http.domain === 'function') {
+            return 'http:\/\/' + Http.domain + url;
+        } else {
+            return url;
         }
-        return url;
+    }
+
+    /**
+     * 设置请求的域名
+     */
+    public static setDomain(domain: any) {
+        if (typeof domain === 'string' || typeof domain === 'function') {
+            Http.domain = domain;
+        } else {
+            console.log('setDomain 的参数 domain 必须是一个字符串或者函数');
+        }
     }
    
     /**

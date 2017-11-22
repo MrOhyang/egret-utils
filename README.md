@@ -3,7 +3,7 @@
 
 <p>
   <span>
-    <img src="https://img.shields.io/badge/version-1.0.5-green.svg" alt="version">
+    <img src="https://img.shields.io/badge/version-1.0.6-green.svg" alt="version">
   </span>
   <span>
     <img src="https://img.shields.io/badge/downloads-7k-blue.svg" alt="downloads">
@@ -36,7 +36,7 @@ let obj = ObjectPool.getInstance().deleteObject(obj: Object);
 
 
 
-## 2. Http.ts 网络请求封装（待完善）
+## 2. Http.ts 网络请求封装
 使用方法：
 
 ```typescript
@@ -47,6 +47,22 @@ let res = await new Http().post('/api/test', postData);
 new Http().post('/api/test', postData).then(r => {
   // do something...
 }).catch(e => {});
+```
+
+如果在开发环境中，需要进行跨域请求资源，那么可以设置一下域名。
+
+```typescript
+// 直接设置域名
+Http.setDomain('localhost:9001');
+
+// 或者设置一个函数
+Http.setDomain(() => {
+  // 注意，如果是 native 下是没有 window 对象的，可以用 document.domain 来判断。
+  if (window && /127.0.0.1/.test(window.location.host)) {
+    return 'localhost:9001';
+  }
+  return null;
+});
 ```
 
 > 注意事项：必须使用 new 来创建一个请求。默认超时时间为30s，可直接修改默认值，或者新建方法参数来修改默认值。

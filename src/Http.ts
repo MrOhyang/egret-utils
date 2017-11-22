@@ -40,20 +40,20 @@ class Http {
             this.request.send(this.formatPostData(param));
             this.request.addEventListener(egret.Event.COMPLETE, (e: egret.Event) => {
                 let request = <egret.HttpRequest>e.currentTarget;
-                window.clearTimeout(timer);
+                egret.clearTimeout(timer);
                 resolve(JSON.parse(request.response));
             }, this);
             this.request.addEventListener(egret.IOErrorEvent.IO_ERROR, (e: egret.IOErrorEvent) => {
-                window.clearTimeout(timer);
+                egret.clearTimeout(timer);
                 reject(e);
             }, this);
-            timer = window.setTimeout(() => {
+            timer = egret.setTimeout(() => {
                 reject({
                     msg: `该链接已超时: ${timeout}`,
                     url,
                     param
                 });
-            }, timeout);
+            }, this, timeout);
         });
     }
 
@@ -78,20 +78,20 @@ class Http {
             this.request.send();
             this.request.addEventListener(egret.Event.COMPLETE, (e: egret.Event) => {
                 let request = <egret.HttpRequest>e.currentTarget;
-                window.clearTimeout(timer);
+                egret.clearTimeout(timer);
                 resolve(JSON.parse(request.response));
             }, this);
             this.request.addEventListener(egret.IOErrorEvent.IO_ERROR, (e: egret.IOErrorEvent) => {
-                window.clearTimeout(timer);
+                egret.clearTimeout(timer);
                 reject(e);
             }, this);
-            timer = window.setTimeout(() => {
+            timer = egret.setTimeout(() => {
                 reject({
                     msg: `该链接已超时: ${timeout}`,
                     url,
                     param
                 });
-            }, timeout);
+            }, this, timeout);
         });
     }
 
@@ -100,8 +100,8 @@ class Http {
      * @param url 一个用来包含发送请求的 url 字符串
      */
     private getUrl(url: string): string {
-        if (/^((127.0.0.1)|(yes.com))/.test(window.location.host)) {
-            return `http://127.0.0.1:8889${url}`;
+        if (window && window.location && /^((127.0.0.1)|(yes.com))/.test(window.location.host)) {
+            return `http://127.0.0.1:9001${url}`;
         }
         return url;
     }

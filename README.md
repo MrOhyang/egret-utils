@@ -3,7 +3,7 @@
 
 <p>
   <span>
-    <img src="https://img.shields.io/badge/version-1.0.4-green.svg" alt="version">
+    <img src="https://img.shields.io/badge/version-1.0.5-green.svg" alt="version">
   </span>
   <span>
     <img src="https://img.shields.io/badge/downloads-7k-blue.svg" alt="downloads">
@@ -26,14 +26,17 @@ let obj = ObjectPool.getInstance().deleteObject(obj: Object);
 ```
 
 > 注意事项：在使用该类的方法的时候，需要要求 classFactory 类中拥有静态成员属性 key 值来进行区分创建和回收存储不同种类的对象。
-> 而且最好在该类中定义好创建对象完成的回调函数 **onCreate**、回收对象完成的回调函数 **onDestory**，一个用来初始化变量，一个用来释放资源。
-> 如果需要查看详细的设计细节或具体的使用方法，[**请戳此处链接**](http://a8ccce0e.wiz03.com/share/s/2EPcUe16jknd21LCSr0jir5o1Uo2SA2TUQKH2PyOcZ0XXImI)。
+> 而且最好在该类中定义好创建对象完成的回调函数 **onCreate**、
+> 回收对象完成的回调函数 **onDestory**，
+> 一个用来初始化变量，一个用来释放资源。
+> 如果需要查看详细的设计细节或具体的使用方法，
+> [**请戳此处链接**](http://a8ccce0e.wiz03.com/share/s/2EPcUe16jknd21LCSr0jir5o1Uo2SA2TUQKH2PyOcZ0XXImI)。
 
 
 
 
 
-## 2. Http.ts 网络请求封装
+## 2. Http.ts 网络请求封装（待完善）
 使用方法：
 
 ```typescript
@@ -47,6 +50,7 @@ new Http().post('/api/test', postData).then(r => {
 ```
 
 > 注意事项：必须使用 new 来创建一个请求。默认超时时间为30s，可直接修改默认值，或者新建方法参数来修改默认值。
+> 在源码的 getUrl 方法里，会有一个添加域名的过程，不过不需要的话，可以先注释掉。**（为了跨域需要，之后修改成可配置）**
 
 
 

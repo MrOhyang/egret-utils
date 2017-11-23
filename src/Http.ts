@@ -108,7 +108,7 @@ class Http {
         if (typeof Http.domain === 'string' && Http.domain.length > 0) {
             return `http:\/\/${Http.domain}`;
         } else if (typeof Http.domain === 'function') {
-            return 'http:\/\/' + Http.domain + url;
+            return 'http:\/\/' + Http.domain() + url;
         } else {
             return url;
         }

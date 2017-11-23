@@ -57,16 +57,16 @@ Http.setDomain('localhost:9001');
 
 // 或者设置一个函数
 Http.setDomain(() => {
-  // 注意，如果是 native 下是没有 window 对象的，可以用 document.domain 来判断。
-  if (window && /127.0.0.1/.test(window.location.host)) {
+  if (/127.0.0.1/.test(document.domain)) {
     return 'localhost:9001';
   }
+  // 当返回 null 的时候，请求时是不会添加 domain 的，例如 '/api/test.php'
   return null;
 });
 ```
 
 > 注意事项：必须使用 new 来创建一个请求。默认超时时间为30s，可直接修改默认值，或者新建方法参数来修改默认值。
-> 在源码的 getUrl 方法里，会有一个添加域名的过程，不过不需要的话，可以先注释掉。**（为了跨域需要，之后修改成可配置）**
+> 在源码的 getUrl 方法里，会有一个添加域名的过程，不过不需要的话，可以先注释掉。
 
 
 
@@ -95,7 +95,7 @@ class loadingUI {
 }
 ResManager.getInstance().init(loadingUI, this);  // 初始化资源管理器
 try {
-    await ResManager.getInstance().loadGroup('group_name');  // 加载资源
+    await ResManager.getInstance().loadGroup('group_name');  // 加载资源组
 } catch (e) {}
 ```
 

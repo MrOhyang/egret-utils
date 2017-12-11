@@ -3,10 +3,10 @@
 
 <p>
   <span>
-    <img src="https://img.shields.io/badge/version-1.0.6-green.svg" alt="version">
+    <img src="https://img.shields.io/badge/version-1.0.7-green.svg" alt="version">
   </span>
   <span>
-    <img src="https://img.shields.io/badge/downloads-7k-blue.svg" alt="downloads">
+    <img src="https://img.shields.io/badge/downloads-20k-blue.svg" alt="downloads">
   </span>
 </p>
 
@@ -109,6 +109,27 @@ try {
 > 1. 在使用 ResManager 之前一定要先初始化。
 > 2. 在进行 loadGroup 的时候一定要用 try catch，或者使用 .then().catch() 语法。
 > 3. loadingUI 加载层类的定义中，一定要有 setProgress 方法，用来进行进度条的显示。
+
+
+
+
+
+## 5. Message.ts 用来消息提醒的 UI组件
+使用方法：
+
+```typescript
+new Message({
+  text: '提醒的消息',
+  // type: 'success',  // 默认 成功类型
+  // duration: 2000,   // 默认 2s
+}, this);
+Message.success({text: '登录成功'}, this);
+Message.error({text: '发生错误'}, this);
+```
+
+> 注意事项：
+> 1. Message 的第二个参数为显示的舞台，
+> 创建的 Message实体 会添加到指定的舞台。
 
 
 

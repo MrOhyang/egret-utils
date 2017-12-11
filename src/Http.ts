@@ -78,7 +78,7 @@ class Http {
             if (getData != '') {
                 real_url += `?${getData}`;
             }
-            this.request.open(real_url, egret.HttpMethod.POST);
+            this.request.open(real_url, egret.HttpMethod.GET);
             this.request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
             this.request.send();
             this.request.addEventListener(egret.Event.COMPLETE, (e: egret.Event) => {

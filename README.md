@@ -3,10 +3,7 @@
 
 <p>
   <span>
-    <img src="https://img.shields.io/badge/version-1.0.7-green.svg" alt="version">
-  </span>
-  <span>
-    <img src="https://img.shields.io/badge/downloads-20k-blue.svg" alt="downloads">
+    <img src="https://img.shields.io/badge/version-1.0.8-green.svg" alt="version">
   </span>
 </p>
 
@@ -89,26 +86,36 @@ let mc = MCFactory.createMovieClip(key);
 使用方法：
 
 ```typescript
+//// 方法1.
 // loadingView 的类定义
 class loadingUI {
-  public setProgress() {}
+  public setProgress(loaded, total) {}
 }
-ResManager.getInstance().init(loadingUI, this);  // 初始化资源管理器
 try {
-    await ResManager.getInstance().loadGroup('group_name');  // 加载资源组
+    await new ResManager('loadingView', {
+        view: loadingUI,  // 加载层的构造函数
+        obj: this         // 添加到的指定舞台
+    }).loadGroup('group_name');  // 加载资源组
+} catch (e) {}
+
+//// 方法2
+try {
+    await new ResManager('callback', {
+        updated: (loaded, total) => void,  // 更新进度回调
+        completed: () => void              // 完成回调
+    }).loadGroup('group_name')
 } catch (e) {}
 ```
 
-在 init 函数中，有两个参数，
+在 构造函数当中 函数中，有两个参数，
 
-第1个参数是 loadingView （加载层）的类原型。当然，名字不一定是 loadingUI，可以随便定义。
+第1个参数是 加载模式。'loadingView'=>加载层模式，'callback'=>回调模式。
 
-第2个参数是在加载资源过程中，需要将 loadingView 添加到视图中的父容器对象。
+第2个参数是用来对加载模式进行设置的参数。（详情见构造函数的注释）
 
 > 注意事项：
-> 1. 在使用 ResManager 之前一定要先初始化。
-> 2. 在进行 loadGroup 的时候一定要用 try catch，或者使用 .then().catch() 语法。
-> 3. loadingUI 加载层类的定义中，一定要有 setProgress 方法，用来进行进度条的显示。
+> 1. 在进行 loadGroup 的时候一定要用 try catch，或者使用 .then().catch() 语法。
+> 2. loadingUI 加载层类的定义中，一定要有 setProgress 方法，用来进行进度条的显示。
 
 
 

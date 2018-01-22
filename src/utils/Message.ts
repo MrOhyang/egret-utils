@@ -20,7 +20,7 @@ class Message extends eui.Group {
         this.text = text;
         this.type = type;
         this.duration = duration;
- 
+
         this.down_len = 50;
 
         thisObject.addChild(this);
@@ -41,7 +41,7 @@ class Message extends eui.Group {
 
     // 绘制背景
     private drawBg() {
-        let bg: eui.Rect = new eui.Rect();
+        const bg: eui.Rect = new eui.Rect();
         this.addChild(bg);
         bg.percentWidth = 100;
         bg.percentHeight = 100;
@@ -63,7 +63,7 @@ class Message extends eui.Group {
 
     // 绘制图标
     private drawIcon() {
-        let shp: egret.Shape = new egret.Shape();
+        const shp: egret.Shape = new egret.Shape();
         this.addChild(shp);
 
         shp.x = 30;
@@ -107,7 +107,7 @@ class Message extends eui.Group {
 
     // 绘制文字
     private drawLabel() {
-        let label: eui.Label = new eui.Label;
+        const label: eui.Label = new eui.Label();
         this.addChild(label);
         label.text = this.text;
         label.size = 26;

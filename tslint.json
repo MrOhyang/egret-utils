@@ -18,9 +18,9 @@
     "no-string-literal": false,
     "no-trailing-whitespace": true,
     "only-arrow-functions": false,
+    "object-literal-sort-keys": false,
     "quotemark": [true, "single"],
-    "semicolon": [true, "never"],
-    "space-before-function-paren": true,
+    "semicolon": [true, "always"],
     "trailing-comma": [true, {"multiline": "never", "singleline": "never"}],
     "variable-name": [true, "ban-keywords", "allow-leading-underscore", "allow-snake-case"]
   },

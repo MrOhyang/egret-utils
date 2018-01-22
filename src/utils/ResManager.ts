@@ -14,27 +14,27 @@ class ResManager {
    *     'loadingView'=>出现整屏loading效果,
    *     'callback'=>回调模式
    */
-  private type: string
+  private type: string;
   /**
    * 资源管理器配置
    */
-  private option: IResManagerOption
+  private option: IResManagerOption;
   /**
    * 正在加载的当前资源组的 key 名
    */
-  private group_name: string
+  private group_name: string;
   /**
    * promise 的 resolve
    */
-  private resolve: any
+  private resolve: any;
   /**
    * promise 的 reject
    */
-  private reject: any
+  private reject: any;
   /**
    * loading 加载层
    */
-  private loading_view: egret.DisplayObject
+  private loading_view: egret.DisplayObject;
 
   /**
    * 构造函数
@@ -47,36 +47,36 @@ class ResManager {
    * @param option option.updated 更新回调函数               -- 'callback' 模式需要
    * @param option option.completed 资源组加载完成时回调函数  -- 'callback' 模式需要
    */
-  public constructor (type: string = 'loadingView', option?: IResManagerOption) {
+  public constructor(type: string = 'loadingView', option?: IResManagerOption) {
     // 判断处理类型
     switch (type) {
       case 'loadingView':
         if (!option) {
-          console.warn('ResManager 设置为加载层模式，但是没有设置参数 option，请查看相关注释')
+          console.warn('ResManager 设置为加载层模式，但是没有设置参数 option，请查看相关注释');
         } else {
           if (!option.view) {
-            console.warn(`ResManager 设置为加载层模式，但是没有设置 loadingView 加载层的构造方法，请查看相关注释`)
+            console.warn(`ResManager 设置为加载层模式，但是没有设置 loadingView 加载层的构造方法，请查看相关注释`);
           }
           if (!option.obj) {
-            console.warn(`ResManager 设置为加载层模式，但是没有设置 obj 要添加加载层的舞台容器，请查看相关注释`)
+            console.warn(`ResManager 设置为加载层模式，但是没有设置 obj 要添加加载层的舞台容器，请查看相关注释`);
           }
         }
-        break
+        break;
       case 'callback':
         if (!option) {
-          console.warn('ResManager 设置为回调模式，但是没有设置参数 option，请查看相关注释')
+          console.warn('ResManager 设置为回调模式，但是没有设置参数 option，请查看相关注释');
         } else {
           if (!option.updated && !option.completed) {
-            console.warn(`ResManager 设置为回调模式，但是没有设置回调，请查看相关注释`)
+            console.warn(`ResManager 设置为回调模式，但是没有设置回调，请查看相关注释`);
           }
         }
-        break
+        break;
       default:
-        console.warn(`ResManager 没有该类型的处理模式, type=${type}`)
-        return
+        console.warn(`ResManager 没有该类型的处理模式, type=${type}`);
+        return;
     }
-    this.type = type
-    this.option = option
+    this.type = type;
+    this.option = option;
   }
 
   // ------------------------------------------------ api ↓
@@ -85,35 +85,35 @@ class ResManager {
    * 加载某组的资源
    * @param group_name 资源组的 key 名
    */
-  public loadGroup (group_name: string) {
+  public loadGroup(group_name: string) {
     // 检测是否已经加载了资源
     if (RES.isGroupLoaded(group_name)) {
-      this.option.completed()
-      return Promise.resolve()
+      this.option.completed();
+      return Promise.resolve();
     }
 
     switch (this.type) {
       case 'loadingView':
         // 初始化加载层
-        this.loading_view = new this.option.view()
-        this.option.obj.addChild(this.loading_view)
-        break
-        case 'callback':
-        break
+        this.loading_view = new this.option.view();
+        this.option.obj.addChild(this.loading_view);
+        break;
+      case 'callback':
+        break;
     }
 
     // 生成 promise
     const temp = new Promise((resolve, reject) => {
-      this.resolve = resolve
-      this.reject = reject
-    })
+      this.resolve = resolve;
+      this.reject = reject;
+    });
 
     // 加载资源
-    this.group_name = group_name
-    this.registerEvent()
-    RES.loadGroup(group_name)
+    this.group_name = group_name;
+    this.registerEvent();
+    RES.loadGroup(group_name);
 
-    return temp
+    return temp;
   }
 
   // ------------------------------------------------ api ↑
@@ -121,49 +121,49 @@ class ResManager {
   /**
    * 注册资源加载的相关事件
    */
-  private registerEvent () {
-    RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResLoadComplete, this)
-    RES.addEventListener(RES.ResourceEvent.GROUP_LOAD_ERROR, this.onResLoadError, this)
-    RES.addEventListener(RES.ResourceEvent.GROUP_PROGRESS, this.onResProgress, this)
-    RES.addEventListener(RES.ResourceEvent.ITEM_LOAD_ERROR, this.onItemLoadError, this)
+  private registerEvent() {
+    RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResLoadComplete, this);
+    RES.addEventListener(RES.ResourceEvent.GROUP_LOAD_ERROR, this.onResLoadError, this);
+    RES.addEventListener(RES.ResourceEvent.GROUP_PROGRESS, this.onResProgress, this);
+    RES.addEventListener(RES.ResourceEvent.ITEM_LOAD_ERROR, this.onItemLoadError, this);
   }
 
   /**
    * 移除事件
    */
-  private removeEvent () {
-    RES.removeEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResLoadComplete, this)
-    RES.removeEventListener(RES.ResourceEvent.GROUP_LOAD_ERROR, this.onResLoadError, this)
-    RES.removeEventListener(RES.ResourceEvent.GROUP_PROGRESS, this.onResProgress, this)
-    RES.removeEventListener(RES.ResourceEvent.ITEM_LOAD_ERROR, this.onItemLoadError, this)
+  private removeEvent() {
+    RES.removeEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResLoadComplete, this);
+    RES.removeEventListener(RES.ResourceEvent.GROUP_LOAD_ERROR, this.onResLoadError, this);
+    RES.removeEventListener(RES.ResourceEvent.GROUP_PROGRESS, this.onResProgress, this);
+    RES.removeEventListener(RES.ResourceEvent.ITEM_LOAD_ERROR, this.onItemLoadError, this);
   }
 
   /**
    * 资源组加载完成后的回调函数
    */
-  private onResLoadComplete (e: RES.ResourceEvent) {
+  private onResLoadComplete(e: RES.ResourceEvent) {
     if (e.groupName === this.group_name) {
-      this.removeEvent()
+      this.removeEvent();
       switch (this.type) {
         case 'loadingView':
           // 移除 loadingView 视图
           if (this.loading_view.parent) {
-            this.loading_view.parent.removeChild(this.loading_view)
-            this.loading_view = undefined
+            this.loading_view.parent.removeChild(this.loading_view);
+            this.loading_view = undefined;
           }
-          break
+          break;
         case 'callback':
           if (this.option && typeof this.option.completed === 'function' ) {
-            this.option.completed()
+            this.option.completed();
           }
-          break
+          break;
       }
       if (typeof this.resolve === 'function') {
-        this.resolve()
-        this.resolve = null
-        this.reject = null
+        this.resolve();
+        this.resolve = null;
+        this.reject = null;
       } else {
-        console.warn('资源配置有误 ResManager')
+        console.warn('资源配置有误 ResManager');
       }
     }
   }
@@ -171,44 +171,44 @@ class ResManager {
   /**
    * 资源组加载错误的回掉函数
    */
-  private onResLoadError (e: RES.ResourceEvent) {
-    console.warn('Group:' + e.groupName + ' has failed to load')
+  private onResLoadError(e: RES.ResourceEvent) {
+    console.warn('Group:' + e.groupName + ' has failed to load');
     if (typeof this.reject === 'function') {
-      this.removeEvent()
+      this.removeEvent();
       // 移除 loadingView 视图
       // if (this.loadingView && this.loadingView.parent) {
       //   this.container.removeChild(this.loadingView)
       //   delete this.loadingView
       // }
-      this.reject('资源组加载错误 ResManager')
-      this.resolve = null
-      this.reject = null
+      this.reject('资源组加载错误 ResManager');
+      this.resolve = null;
+      this.reject = null;
     } else {
-      console.warn('资源配置有误 ResManager')
+      console.warn('资源配置有误 ResManager');
     }
   }
 
   /**
    * 资源组加载中的进度回调
    */
-  private onResProgress (e: RES.ResourceEvent) {
+  private onResProgress(e: RES.ResourceEvent) {
     if (e.groupName === this.group_name) {
-      const loaded_num = e.itemsLoaded  // 当前加载数
-      const total_num = e.itemsTotal    // 总的加载数
+      const loaded_num = e.itemsLoaded;  // 当前加载数
+      const total_num = e.itemsTotal;    // 总的加载数
 
       switch (this.type) {
         case 'loadingView':  // 设置加载层的进度
           if (this.loading_view && typeof (<any> this.loading_view).setProgress === 'function') {
-            (<any> this.loading_view).setProgress(e.itemsLoaded, e.itemsTotal)
+            (<any> this.loading_view).setProgress(e.itemsLoaded, e.itemsTotal);
           } else {
-            console.warn('this.loading_view 没有 setProgress 这个方法, 或未进行设置 loading_view')
+            console.warn('this.loading_view 没有 setProgress 这个方法, 或未进行设置 loading_view');
           }
-          break
+          break;
         case 'callback':  // 执行更新回调
           if (this.option && typeof this.option.updated === 'function' ) {
-            this.option.updated(e.itemsLoaded, e.itemsTotal)
+            this.option.updated(e.itemsLoaded, e.itemsTotal);
           }
-          break
+          break;
       }
     }
   }
@@ -216,7 +216,7 @@ class ResManager {
   /**
    * 资源组中某个资源加载错误的回调
    */
-  private onItemLoadError (e: RES.ResourceEvent) {
-    console.warn('Url:' + e.resItem.url + ' has failed to load')
+  private onItemLoadError(e: RES.ResourceEvent) {
+    console.warn('Url:' + e.resItem.url + ' has failed to load');
   }
 }

@@ -1,7 +1,7 @@
 /**
  * 基于 egret.HttpRequest 封装的 Http 类，主要用来进行网络请求封装
  * post/get 方法返回的都是 promise 对象，可以支持新的 promise/await 新的语法。
- * 
+ *
  * 使用方法：
  * let res = await new Http().post('/api/test', {id: 1});
  */
@@ -35,16 +35,16 @@ class Http {
      * @param url 一个用来包含发送请求的 url 字符串
      * @param param 发送到服务器的数据
      */
-    public post(url: string, param: Object = {}) {
-        let timer = null,
-            timeout = Http.timeout;
+    public post(url: string, param: any = {}) {
+        let timer = null;
+        const timeout = Http.timeout;
 
         return new Promise((resolve, reject) => {
             this.request.open(this.getUrl(url), egret.HttpMethod.POST);
-            this.request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            this.request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             this.request.send(this.formatPostData(param));
             this.request.addEventListener(egret.Event.COMPLETE, (e: egret.Event) => {
-                let request = <egret.HttpRequest>e.currentTarget;
+                const request = <egret.HttpRequest> e.currentTarget;
                 egret.clearTimeout(timer);
                 resolve(JSON.parse(request.response));
             }, this);
@@ -67,22 +67,22 @@ class Http {
      * @param url 一个用来包含发送请求的 url 字符串
      * @param param 发送到服务器的数据
      */
-    public get(url: string, param: Object = {}) {
-        let timer = null,
-            timeout = Http.timeout;
+    public get(url: string, param: any = {}) {
+        let timer = null;
+        const timeout = Http.timeout;
 
         return new Promise((resolve, reject) => {
-            let getData = this.formatPostData(param),
-                real_url = this.getUrl(url);
-            
-            if (getData != '') {
+            const getData = this.formatPostData(param);
+            let real_url = this.getUrl(url);
+
+            if (getData !== '') {
                 real_url += `?${getData}`;
             }
             this.request.open(real_url, egret.HttpMethod.GET);
-            this.request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            this.request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             this.request.send();
             this.request.addEventListener(egret.Event.COMPLETE, (e: egret.Event) => {
-                let request = <egret.HttpRequest>e.currentTarget;
+                const request = <egret.HttpRequest> e.currentTarget;
                 egret.clearTimeout(timer);
                 resolve(JSON.parse(request.response));
             }, this);
@@ -108,9 +108,9 @@ class Http {
         if (typeof Http.domain === 'string' && Http.domain.length > 0) {
             return `http:\/\/${Http.domain}`;
         } else if (typeof Http.domain === 'function') {
-            let domain = Http.domain();
+            const domain = Http.domain();
 
-            if (!domain || domain === '') return url;
+            if (!domain || domain === '') { return url; }
             return `http:\/\/${domain}${url}`;
         } else {
             return url;
@@ -127,21 +127,21 @@ class Http {
             console.log('setDomain 的参数 domain 必须是一个字符串或者函数');
         }
     }
-   
+
     /**
      * 格式化传参, eg: {p1: a, p2: b}  ==>  'p1=a&p2=b'
      * @param param 发送到服务器的数据
      */
-    private formatPostData(param: Object): string {
-        let arr = [],
-            val = '';
+    private formatPostData(param: any): string {
+        const arr = [];
+        let val = '';
 
-        for (let key in param) {
+        for (const key in param) {
             // 如果是数组，或者是对象，则进行 JSON.stringify
-            if (typeof param[key] == 'object') {
+            if (typeof param[key] === 'object') {
                 try {
                     val = JSON.stringify(param[key]);
-                } catch(e) {
+                } catch (e) {
                     console.log(`Http.formatPostData 参数异常: `, param);
                     val = '';
                 }
@@ -150,7 +150,7 @@ class Http {
                 arr.push(`${key}=${param[key]}`);
             }
         }
-        if (arr.length <= 0) return undefined;
+        if (arr.length <= 0) { return undefined; }
         return arr.join('&');
     }
 }

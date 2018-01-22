@@ -10,11 +10,11 @@ class ObjectPool {
     /**
      * 对象池
      */
-    private pool: Object;
+    private pool: any;
     /**
      * 对象计数器
      */
-    private obj_count: Object;
+    private obj_count: any;
     // private obj_count: {
     //     string: {
     //         show_count: number,     // 目前显示的数量
@@ -63,8 +63,8 @@ class ObjectPool {
      * @param classFactory 需要获取的类
      */
     public createObject(classFactory: any) {
-        let key = classFactory.key,
-            obj = null;
+        const key = classFactory.key;
+        let obj = null;
 
         if (!key) {
             throw new Error(`该类没有静态变量 key: ${classFactory.toString()}`);
@@ -90,14 +90,14 @@ class ObjectPool {
      * @param obj 指定的删除对象（必须含有 key 值，否则报错）
      */
     public deleteObject(obj: any) {
-        let key = obj.key;
+        const key = obj.key;
 
         if (!key) {
             throw new Error(`该类没有静态变量 key: ${JSON.stringify(obj)}`);
         }
         this.checkPoolKey(key);
         // 从场景中移除
-        if (obj.parent) obj.parent.removeChild(obj);
+        if (obj.parent) { obj.parent.removeChild(obj); }
         this.onDestory(obj);
         this.obj_count[key].show_count--;
         this.obj_count[key].recycle_count++;
@@ -133,10 +133,10 @@ class ObjectPool {
      * @param key 对象池的 key 值
      */
     public printObjCount(key: string) {
-        let created_count = this.obj_count[key].created_count,
-            show_count = this.obj_count[key].show_count,
-            recycle_count = this.obj_count[key].recycle_count,
-            str = [
+        const created_count = this.obj_count[key].created_count;
+        const show_count = this.obj_count[key].show_count;
+        const recycle_count = this.obj_count[key].recycle_count;
+        const str = [
                 `${key}对象池信息: `,
                 `created_count: ${created_count}, `,
                 `show_count: ${show_count}, `,

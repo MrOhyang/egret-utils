@@ -46,7 +46,12 @@ class Http {
             this.request.addEventListener(egret.Event.COMPLETE, (e: egret.Event) => {
                 const request = <egret.HttpRequest> e.currentTarget;
                 egret.clearTimeout(timer);
-                resolve(JSON.parse(request.response));
+                try {
+                    const data = JSON.parse(request.response);
+                    resolve(data);
+                } catch (e) {
+                    reject('JSON.parse 失败');
+                }
             }, this);
             this.request.addEventListener(egret.IOErrorEvent.IO_ERROR, (e: egret.IOErrorEvent) => {
                 egret.clearTimeout(timer);
@@ -84,7 +89,12 @@ class Http {
             this.request.addEventListener(egret.Event.COMPLETE, (e: egret.Event) => {
                 const request = <egret.HttpRequest> e.currentTarget;
                 egret.clearTimeout(timer);
-                resolve(JSON.parse(request.response));
+                try {
+                    const data = JSON.parse(request.response);
+                    resolve(data);
+                } catch (e) {
+                    reject('JSON.parse 失败');
+                }
             }, this);
             this.request.addEventListener(egret.IOErrorEvent.IO_ERROR, (e: egret.IOErrorEvent) => {
                 egret.clearTimeout(timer);
